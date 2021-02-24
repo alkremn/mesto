@@ -7,6 +7,16 @@
   background-position: center;
   border: 1px solid #fff;
   margin-top: 36px;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.profile__addButton:hover {
+  opacity: 0.6;
+}
+
+.profile__addButton:focus {
+  outline: none;
 }
 
 @media screen and (min-width: 768px) {

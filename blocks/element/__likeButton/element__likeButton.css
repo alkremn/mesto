@@ -1,7 +1,20 @@
 .element__likeButton {
   width: 22px;
   height: 19px;
+  margin-left: 20px;
   background-image: url(../../../images/like.svg);
   border: none;
   background-color: transparent;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out ;
+}
+.element__likeButton-active {
+  background-image: url(../../../images/like_active.svg);
+}
+.element__likeButton:hover {
+  opacity: 0.5;
+}
+
+.element__likeButton:focus {
+  outline: none;
 }

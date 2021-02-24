@@ -6,4 +6,21 @@
   background-repeat: no-repeat;
   background-position: center;
   border: 1px solid #fff;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.profile__editButton:hover {
+  opacity: 0.6;
+}
+
+.profile__editButton:focus {
+  outline: none;
+}
+
+@media screen and (min-width: 768px) {
+  .profile__editButton {
+    width: 24px;
+    height: 24px;
+  }
 }
