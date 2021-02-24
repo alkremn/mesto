@@ -17,12 +17,18 @@
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__info-top/profile__info-top.css);
 @import url(../blocks/profile/__editButton/profile__editButton.css);
-@import url(../blocks/profile/__title/profile__title.css);
-@import url(../blocks/profile/__subtitle/profile__subtitle.css);
+@import url(../blocks/profile/__name/profile__name.css);
+@import url(../blocks/profile/__job/profile__job.css);
 @import url(../blocks/profile/__addButton/profile__addButton.css);
 
 /* Popup */
 @import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/__closeButton/popup__closeButton.css);
+@import url(../blocks/popup/__title/popup__title.css);
+@import url(../blocks/popup/__input/popup__input.css);
+@import url(../blocks/popup/__saveButton/popup__saveButton.css);
+
 /*  Elements */
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/elements/__list/elements__list.css);

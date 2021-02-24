@@ -1,0 +1,23 @@
+.popup__closeButton {
+  position: absolute;
+  right: 0;
+  top: -40px;
+  width: 26px;
+  height: 26px;
+  background-image: url(../../../images/plus.png);
+  transform: rotate(45deg);
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.popup__closeButton:focus {
+  outline: none;
+}
+
+.popup__closeButton:hover {
+  opacity: 0.6;
+  transform: rotate(135deg);
+}
