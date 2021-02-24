@@ -1,0 +1,9 @@
+.profile__subtitle {
+  margin: 14px 0 0;
+}
+
+@media screen and (min-width: 768px) {
+  .profile__subtitle {
+    margin: 16px 0 0;
+  }
+}
