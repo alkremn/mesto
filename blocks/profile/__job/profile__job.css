@@ -1,9 +1,11 @@
-.profile__subtitle {
+.profile__job {
   margin: 14px 0 0;
+  font-size: 14px;
 }
 
 @media screen and (min-width: 768px) {
-  .profile__subtitle {
+  .profile__job {
     margin: 16px 0 0;
+    font-size: 18px;
   }
 }

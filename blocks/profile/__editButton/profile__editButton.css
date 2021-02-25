@@ -3,6 +3,7 @@
   height: 18px;
   background-color: transparent;
   background-image: url(../../../images/pencel.png);
+
   background-repeat: no-repeat;
   background-position: center;
   border: 1px solid #fff;
@@ -20,6 +21,7 @@
 
 @media screen and (min-width: 768px) {
   .profile__editButton {
+    background-size: 10px;
     width: 24px;
     height: 24px;
   }
