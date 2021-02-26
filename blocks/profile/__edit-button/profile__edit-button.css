@@ -1,4 +1,4 @@
-.profile__editButton {
+.profile__edit-button {
   width: 18px;
   height: 18px;
   background-color: transparent;
@@ -11,16 +11,16 @@
   transition: opacity 0.2s ease-in-out;
 }
 
-.profile__editButton:hover {
+.profile__edit-button:hover {
   opacity: 0.6;
 }
 
-.profile__editButton:focus {
+.profile__edit-button:focus {
   outline: none;
 }
 
 @media screen and (min-width: 768px) {
-  .profile__editButton {
+  .profile__edit-button {
     background-size: 10px;
     width: 24px;
     height: 24px;
