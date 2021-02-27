@@ -1,13 +1,17 @@
 .profile__job {
   margin: 14px 0 0;
+  max-width: calc(100vw - 140px);
   font-size: 14px;
   white-space: nowrap;
   text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 @media screen and (min-width: 768px) {
   .profile__job {
     margin: 16px 0 0;
     font-size: 18px;
+    width: calc(100vw - 370px);
+    max-width: 450px;
   }
 }
