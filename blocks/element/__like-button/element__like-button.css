@@ -1,4 +1,4 @@
-.element__likeButton {
+.element__like-button {
   width: 22px;
   height: 19px;
   margin-left: 20px;
@@ -8,13 +8,11 @@
   cursor: pointer;
   transition: opacity 0.2s ease-in-out;
 }
-.element__likeButton-active {
-  background-image: url(../../../images/like_active.svg);
-}
-.element__likeButton:hover {
+
+.element__like-button:hover {
   opacity: 0.5;
 }
 
-.element__likeButton:focus {
+.element__like-button:focus {
   outline: none;
 }

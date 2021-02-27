@@ -1,10 +1,10 @@
 .elements__list {
   list-style: none;
-  margin-top: 36px;
+  margin: 36px 0 0 0;
   padding: 0;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 17px;
+  column-gap: 17px;
 }
 
 @media screen and (min-width: 600px) {
