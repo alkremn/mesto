@@ -6,8 +6,8 @@ let profileName = document.querySelector('.profile__name');
 let profileJob = document.querySelector('.profile__job');
 
 let popup = document.querySelector('.popup');
-let nameInput = document.querySelector('.popup__input-name');
-let jobInput = document.querySelector('.popup__input-job');
+let nameInput = document.querySelector('.popup__input_name');
+let jobInput = document.querySelector('.popup__input_job');
 
 editButton.addEventListener('click', function () {
   document.body.style.overflow = 'hidden';

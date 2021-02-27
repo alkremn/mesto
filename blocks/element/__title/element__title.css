@@ -1,5 +1,5 @@
 .element__title {
-  max-width: 100%;
+  max-width: 80%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
