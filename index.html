@@ -38,48 +38,6 @@
       </section>
       <section class="elements">
         <ul class="elements__list">
-          <li class="element">
-            <img class="element__image" src="images/nyc.jpg" alt="Нью Йорк">
-            <div class="element__description">
-              <h3 class="element__title">Нью Йорк</h3>
-              <button class="element__like-button element__like-button_active" type="button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__image" src="images/sf.jpg" alt="Сан-Франциско">
-            <div class="element__description">
-              <h3 class="element__title">Сан-Франциско</h3>
-              <button class="element__like-button" type="button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__image" src="images/london.jpg" alt="Лондон">
-            <div class="element__description">
-              <h3 class="element__title">Лондон</h3>
-              <button class="element__like-button" type="button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__image" src="images/venecia.jpg" alt="Венеция">
-            <div class="element__description">
-              <h3 class="element__title">Венеция</h3>
-              <button class="element__like-button" type="button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__image" src="images/paris.jpg" alt="Париж">
-            <div class="element__description">
-              <h3 class="element__title">Париж</h3>
-              <button class="element__like-button" type="button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__image" src="images/amsterdam.jpg" alt="Амстердам">
-            <div class="element__description">
-              <h3 class="element__title">Амстердам</h3>
-              <button class="element__like-button" type="button"></button>
-            </div>
-          </li>
         </ul>
       </section>
     </main>
@@ -87,6 +45,16 @@
       <p class="footer__copyright">&copy; 2020. Mesto World</p>
     </footer>
   </div>
+  <template id="element__template">
+    <li class="element">
+      <img class="element__image">
+      <button class="element__delete-button" type="button"></button>
+      <div class="element__description">
+        <h3 class="element__title"></h3>
+        <button class="element__like-button" type="button"></button>
+      </div>
+    </li>
+  </template>
   <script src="js/script.js"></script>
 </body>
 
