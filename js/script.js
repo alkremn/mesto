@@ -60,9 +60,7 @@ editButton.addEventListener('click', () => {
   editForm
     .querySelector('.popup__close-button')
     .addEventListener('click', handlePopupClose);
-  editForm
-    .querySelector('.popup__save-button')
-    .addEventListener('click', e => handlePopupSave(e, editForm.name));
+  editForm.addEventListener('submit', e => handlePopupSave(e, editForm.name));
 
   const popupTitle = editForm.querySelector('.popup__title');
   popupTitle.textContent = EDIT_TITLE;
@@ -96,7 +94,7 @@ addButton.addEventListener('click', () => {
 
   const saveButton = addForm.querySelector('.popup__save-button');
   saveButton.textContent = 'Создать';
-  saveButton.addEventListener('click', e => handlePopupSave(e, addForm.name));
+  addForm.addEventListener('submit', e => handlePopupSave(e, addForm.name));
 
   const popupTitle = addForm.querySelector('.popup__title');
   popupTitle.textContent = ADD_TITLE;
