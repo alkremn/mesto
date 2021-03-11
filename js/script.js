@@ -53,7 +53,7 @@ const popup = document.querySelector('.popup');
 editButton.addEventListener('click', () => {
   const formTemplate = document.querySelector('#form-template').content;
   const editForm = formTemplate
-    .querySelector('.popup__container')
+    .querySelector('.popup__form-container')
     .cloneNode(true);
 
   editForm.name = 'profile-form';
@@ -74,7 +74,11 @@ editButton.addEventListener('click', () => {
   inputs[1].name = 'profileJob';
   inputs[1].value = profileJob.textContent;
 
-  popup.appendChild(editForm);
+  const child = popup.children[0];
+  if (child) {
+    popup.removeChild(child);
+  }
+  popup.append(editForm);
   document.body.style.overflow = 'hidden';
   popup.classList.add('popup_opened');
 });
@@ -82,7 +86,7 @@ editButton.addEventListener('click', () => {
 addButton.addEventListener('click', () => {
   const formTemplate = document.querySelector('#form-template').content;
   const addForm = formTemplate
-    .querySelector('.popup__container')
+    .querySelector('.popup__form-container')
     .cloneNode(true);
 
   addForm.name = 'add-form';
@@ -103,7 +107,12 @@ addButton.addEventListener('click', () => {
   inputs[1].placeholder = 'Ссылка на картинку';
   inputs[1].name = 'placeLink';
 
-  popup.appendChild(addForm);
+  const child = popup.children[0];
+  if (child) {
+    popup.removeChild(child);
+  }
+
+  popup.append(addForm);
   document.body.style.overflow = 'hidden';
   popup.classList.add('popup_opened');
 });
@@ -126,8 +135,7 @@ const handlePopupSave = (e, formName) => {
 
 const handlePopupClose = () => {
   popup.classList.remove('popup_opened');
-  const child = popup.children[0];
-  popup.removeChild(child);
+
   document.body.style.overflow = 'auto';
 };
 
@@ -169,6 +177,31 @@ const createCardElement = item => {
 
   likeButton.addEventListener('click', () => {
     likeButton.classList.toggle('element__like-button_active');
+  });
+  elementImage.addEventListener('click', () => {
+    const imageTemplate = document.querySelector('#image-template').content;
+    const imageContainer = imageTemplate
+      .querySelector('.popup__image-container')
+      .cloneNode(true);
+
+    const image = imageContainer.querySelector('.popup__image');
+    image.src = item.link;
+    image.alt = item.name;
+    const description = imageContainer.querySelector(
+      '.popup__image-description'
+    );
+    description.textContent = item.name;
+
+    const closeButton = imageContainer.querySelector('.popup__close-button');
+    closeButton.addEventListener('click', handlePopupClose);
+
+    const child = popup.children[0];
+    if (child) {
+      popup.removeChild(child);
+    }
+    popup.append(imageContainer);
+    document.body.style.overflow = 'hidden';
+    popup.classList.add('popup_opened');
   });
   return element;
 };
