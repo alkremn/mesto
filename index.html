@@ -28,18 +28,18 @@
         <button class="profile__add-button" type="button"> </button>
       </section>
       <div class="popup popup_type_edit">
-        <form class="popup__content">
+        <form class="popup__content" name="edit">
           <button class="popup__close-button" type="button"></button>
-          <h2 class="popup__title"></h2>
+          <h2 class="popup__title">Редактировать профиль</h2>
           <input class="popup__input" name="name" type="text">
           <input class="popup__input" name="job" type="text">
           <button class="popup__save-button" type="submit">Сохранить</button>
         </form>
       </div>
       <div class="popup popup_type_new-card">
-        <form class="popup__content">
+        <form class="popup__content" name="new-card">
           <button class="popup__close-button" type="button"></button>
-          <h2 class="popup__title"></h2>
+          <h2 class="popup__title">Новое место</h2>
           <input class="popup__input" name="name" type="text" placeholder="Название">
           <input class="popup__input" name="link" type="text" placeholder="Ссылка на картинку">
           <button class="popup__save-button" type="submit">Создать</button>
@@ -53,6 +53,13 @@
           <input class="popup__input" name="link" type="text" placeholder="Ссылка на картинку">
           <button class="popup__save-button" type="submit">Создать</button>
         </form>
+      </div>
+      <div class="popup popup_type_image">
+        <div class="popup__image-content">
+          <button class="popup__close-button" type="button"></button>
+          <img src="" alt="" class="popup__image">
+          <p class="popup__caption"></p>
+        </div>
       </div>
       <section class="elements">
         <ul class="elements__list">
@@ -63,31 +70,15 @@
       <p class="footer__copyright">&copy; 2020. Mesto Russia</p>
     </footer>
   </div>
-  <template id="element__template">
+  <template id="element-template">
     <li class="element">
-      <img class="element__image">
+      <div class="element__image"></div>
       <button class="element__delete-button" type="button"></button>
       <div class="element__description">
-        <h3 class="element__title"></h3>
+        <h2 class="element__title"></h2>
         <button class="element__like-button" type="button"></button>
       </div>
     </li>
-  </template>
-  <template id="form-template">
-    <form class="popup__form-container">
-      <button class="popup__close-button" type="button"></button>
-      <h2 class="popup__title"></h2>
-      <input class="popup__input" name="name" type="text" placeholder="Название">
-      <input class="popup__input" type="text" placeholder="Ссылка на картинку">
-      <button class="popup__save-button" type="submit">Сохранить</button>
-    </form>
-  </template>
-  <template id="image-template">
-    <div class="popup__image-container">
-      <img class="popup__image">
-      <button class="popup__close-button"></button>
-      <p class="popup__image-description"></p>
-    </div>
   </template>
   <script src="js/script.js"></script>
 </body>
