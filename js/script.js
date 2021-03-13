@@ -1,43 +1,16 @@
-const initialCards = [
-  {
-    name: 'Архыз',
-    link:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-  },
-  {
-    name: 'Челябинская область',
-    link:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-  },
-  {
-    name: 'Иваново',
-    link:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-  },
-  {
-    name: 'Камчатка',
-    link:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-  },
-  {
-    name: 'Холмогорский район',
-    link:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-  },
-  {
-    name: 'Байкал',
-    link:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-  },
-];
-
-window.onload = () => {
-  const cards = initialCards.map(card => {
-    return createCardElement(card);
-  });
-
+//functions
+function renderInitialCards() {
+  const cards = initialCards.map(createCardElement);
   elementsList.append(...cards);
-};
+}
+
+function openPopup(popup) {
+  popup.classlist.add('popup_opened');
+}
+
+function closePopup(popup) {
+  popup.classlist.remove('popup_opened');
+}
 
 const elementsList = document.querySelector('.elements__list');
 const editButton = document.querySelector('.profile__edit-button');
@@ -88,12 +61,10 @@ editPopup
     document.body.style.overflow = 'auto';
   });
 
-addForm
-  .querySelector('.popup__close-button')
-  .addEventListener('click', () => {
-    addPopup.classList.remove('popup_opened');
-    document.body.style.overflow = 'auto';
-  });
+addForm.querySelector('.popup__close-button').addEventListener('click', () => {
+  addPopup.classList.remove('popup_opened');
+  document.body.style.overflow = 'auto';
+});
 
 editButton.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
@@ -120,8 +91,8 @@ const createCardElement = item => {
   elementImage.style.backgroundImage = `url('${item.link}')`;
   elementTitle.textContent = item.name;
 
-  deleteButton.addEventListener('click', () => {
-    elementsList.removeChild(element);
+  deleteButton.addEventListener('click', e => {
+    e.target.closest('.element').remove();
   });
 
   likeButton.addEventListener('click', () => {
@@ -145,3 +116,5 @@ const createCardElement = item => {
   });
   return element;
 };
+
+renderInitialCards();
