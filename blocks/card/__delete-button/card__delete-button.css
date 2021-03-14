@@ -1,4 +1,4 @@
-.element__delete-button {
+.card__delete-button {
   position: absolute;
   top: 24px;
   right: 16px;
@@ -14,10 +14,10 @@
   transition: opacity 0.2s ease-in-out;
 }
 
-.element__delete-button:hover {
+.card__delete-button:hover {
   opacity: 0.5;
 }
 
-.element__delete-button:focus {
+.card__delete-button:focus {
   outline: none;
 }

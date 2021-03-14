@@ -1,4 +1,4 @@
-.element__description {
+.card__description {
   padding: 25px 15px 31px 21px;
   display: flex;
   align-items: center;
@@ -11,7 +11,7 @@
 }
 
 @media screen and (min-width: 600px) {
-  .element__description {
+  .card__description {
     padding-right: 20px;
   }
 }
