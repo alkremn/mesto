@@ -1,3 +1,4 @@
+const pageElement = document.querySelector('.page');
 const cardsList = document.querySelector('.cards__list');
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
@@ -75,6 +76,21 @@ function createCard(item) {
 }
 
 // Listeners
+pageElement.addEventListener('click', evt => {
+  if (evt.target.classList.contains('popup')) {
+    closePopup(evt.target);
+  }
+});
+
+document.addEventListener('keyup', evt => {
+  if (evt.key === 'Escape') {
+    const popupOpened = document.querySelector('.popup_opened');
+    if (popupOpened) {
+      closePopup(popupOpened);
+    }
+  }
+});
+
 editButton.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;

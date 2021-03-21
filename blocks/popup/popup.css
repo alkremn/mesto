@@ -9,6 +9,7 @@
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 1;
   visibility: hidden;
+  cursor: pointer;
   opacity: 0;
   transition: visibility 0.2s, opacity 0.2s linear;
 }
