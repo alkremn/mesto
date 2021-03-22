@@ -1,4 +1,4 @@
-.popup__save-button {
+.popup__button {
   height: 46px;
   margin-top: 45px;
   background-color: #000;
@@ -10,12 +10,23 @@
   transition: opacity 0.2s ease-in-out;
 }
 
-.popup__save-button:hover {
+.popup__button:hover {
   opacity: 0.8;
 }
 
 @media screen and (min-width: 600px) {
-  .popup__save-button {
+  .popup__button {
     font-size: 18px;
   }
+}
+
+.popup__button_disabled {
+  opacity: 0.2;
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #000000;
+}
+
+.popup__button_disabled:hover {
+  opacity: 0.2;
 }

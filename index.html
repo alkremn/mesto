@@ -28,22 +28,28 @@
         <button class="profile__add-button" type="button"> </button>
       </section>
       <div class="popup popup_type_edit">
-        <form class="popup__content" name="edit">
+        <form class="popup__form" name="edit">
           <button class="popup__close-button" type="button"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
-          <input class="popup__input" name="name" type="text" id="name-input" minlength="2" maxlength="40" required>
-          <span class="popup__input_type_error name-input-error">Вы пропустили это поле.</span>
-          <input class="popup__input" name="job" type="text" minlength="2" maxlength="200" required>
-          <button class="popup__save-button" type="submit">Сохранить</button>
+          <input class="popup__input" id="name-input" name="name" type="text" minlength="2" maxlength="40"
+            placeholder="Имя" required>
+          <span class="popup__input-error name-input-error"></span>
+          <input class="popup__input" name="job" type="text" id="job-input" minlength="2" maxlength="200"
+            placeholder="О Себе" required>
+          <span class="popup__input-error job-input-error">Вы пропустили это поле.</span>
+          <button class="popup__button" type="submit">Сохранить</button>
         </form>
       </div>
       <div class="popup popup_type_new-card">
-        <form class="popup__content" name="new-card">
+        <form class="popup__form" name="new-card">
           <button class="popup__close-button" type="button"></button>
           <h2 class="popup__title">Новое место</h2>
-          <input class="popup__input" name="name" type="text" placeholder="Название">
-          <input class="popup__input" name="link" type="text" placeholder="Ссылка на картинку">
-          <button class="popup__save-button" type="submit">Создать</button>
+          <input class="popup__input" name="title" id="title-input" type="text" placeholder="Название" minlength="2"
+            maxlength="30" required>
+          <span class="popup__input-error title-input-error">Вы пропустили это поле.</span>
+          <input class="popup__input" name="link" type="url" id="url-input" placeholder="Ссылка на картинку" required>
+          <span class="popup__input-error url-input-error">Введите адрес сайта.</span>
+          <button class="popup__button" type="submit">Создать</button>
         </form>
       </div>
       <div class="popup popup_type_image">
