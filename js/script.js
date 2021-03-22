@@ -87,7 +87,7 @@ pageElement.addEventListener('click', evt => {
   }
 });
 
-document.addEventListener('keyup', evt => {
+document.addEventListener('keydown', evt => {
   if (evt.key === 'Escape') {
     const popupOpened = document.querySelector('.popup_opened');
     if (popupOpened) {
