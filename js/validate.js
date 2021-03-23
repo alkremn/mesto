@@ -1,6 +1,7 @@
 const ERROR_MESSAGE = 'Вы пропустили это поле.';
+let selectorNames;
 
-function showInputError(formElement, inputElement, selectorNames) {
+function showInputError(formElement, inputElement) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(selectorNames.inputErrorClass);
   errorElement.classList.add(selectorNames.errorClass);
@@ -11,17 +12,17 @@ function showInputError(formElement, inputElement, selectorNames) {
   }
 }
 
-function hideInputError(formElement, inputElement, selectorNames) {
+function hideInputError(formElement, inputElement) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(selectorNames.inputErrorClass);
   errorElement.classList.remove(selectorNames.errorClass);
 }
 
-function checkInputValidity(formElement, inputElement, selectorNames) {
+function checkInputValidity(formElement, inputElement) {
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, selectorNames);
+    showInputError(formElement, inputElement);
   } else {
-    hideInputError(formElement, inputElement, selectorNames);
+    hideInputError(formElement, inputElement);
   }
 }
 
@@ -31,41 +32,34 @@ function hasInvalidInput(inputList) {
   });
 }
 
-function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
+function toggleButtonState(inputList, buttonElement) {
   if (hasInvalidInput(inputList)) {
     buttonElement.setAttribute('disabled', true);
-    buttonElement.classList.add(inactiveButtonClass);
+    buttonElement.classList.add(selectorNames.inactiveButtonClass);
   } else {
     buttonElement.removeAttribute('disabled');
-    buttonElement.classList.remove(inactiveButtonClass);
+    buttonElement.classList.remove(selectorNames.inactiveButtonClass);
   }
 }
 
-function setEventListeners(formElement, selectorNames) {
+function setEventListeners(formElement) {
   const inputList = Array.from(
     formElement.querySelectorAll(selectorNames.inputSelector)
   );
   const buttonElement = formElement.querySelector(
     selectorNames.submitButtonSelector
   );
-  toggleButtonState(
-    inputList,
-    buttonElement,
-    selectorNames.inactiveButtonClass
-  );
+  toggleButtonState(inputList, buttonElement);
   inputList.forEach(inputElement => {
     inputElement.addEventListener('input', () => {
-      checkInputValidity(formElement, inputElement, selectorNames);
-      toggleButtonState(
-        inputList,
-        buttonElement,
-        selectorNames.inactiveButtonClass
-      );
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
     });
   });
 }
 
-function enableValidation(selectorNames) {
+function enableValidation(names) {
+  selectorNames = names;
   const formElements = Array.from(
     document.querySelectorAll(selectorNames.formSelector)
   );
@@ -73,7 +67,16 @@ function enableValidation(selectorNames) {
     formElement.addEventListener('submit', evt => {
       evt.preventDefault();
     });
-    setEventListeners(formElement, selectorNames);
+    setEventListeners(formElement);
+  });
+}
+
+function hideFormErrors(formElement) {
+  const inputList = Array.from(
+    formElement.querySelectorAll(selectorNames.inputSelector)
+  );
+  inputList.forEach(inputElement => {
+    hideInputError(formElement, inputElement);
   });
 }
 
