@@ -28,7 +28,7 @@
         <button class="profile__add-button" type="button"> </button>
       </section>
       <div class="popup popup_type_edit">
-        <form class="popup__form form" name="edit">
+        <form class="popup__form" name="edit">
           <button class="popup__close-button" type="button"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
           <input class="popup__input" id="name-input" name="name" type="text" minlength="2" maxlength="40"
@@ -41,7 +41,7 @@
         </form>
       </div>
       <div class="popup popup_type_new-card">
-        <form class="popup__form form" name="new-card">
+        <form class="popup__form" name="new-card">
           <button class="popup__close-button" type="button"></button>
           <h2 class="popup__title">Новое место</h2>
           <input class="popup__input" name="title" id="title-input" type="text" placeholder="Название" minlength="2"
@@ -80,6 +80,7 @@
     </li>
   </template>
   <script src="js/initial-cards.js"></script>
+  <script src="utils/constants.js"></script>
   <script src="js/validate.js"></script>
   <script src="js/script.js"></script>
 </body>

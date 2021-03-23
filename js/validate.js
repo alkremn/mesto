@@ -1,6 +1,3 @@
-const ERROR_MESSAGE = 'Вы пропустили это поле.';
-let selectorNames;
-
 function showInputError(formElement, inputElement) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(selectorNames.inputErrorClass);
@@ -27,17 +24,17 @@ function checkInputValidity(formElement, inputElement) {
 }
 
 function hasInvalidInput(inputList) {
-  return inputList.some(inputElement => {
+  return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });
 }
 
 function toggleButtonState(inputList, buttonElement) {
   if (hasInvalidInput(inputList)) {
-    buttonElement.setAttribute('disabled', true);
+    buttonElement.setAttribute("disabled", true);
     buttonElement.classList.add(selectorNames.inactiveButtonClass);
   } else {
-    buttonElement.removeAttribute('disabled');
+    buttonElement.removeAttribute("disabled");
     buttonElement.classList.remove(selectorNames.inactiveButtonClass);
   }
 }
@@ -50,23 +47,23 @@ function setEventListeners(formElement) {
     selectorNames.submitButtonSelector
   );
   toggleButtonState(inputList, buttonElement);
-  inputList.forEach(inputElement => {
-    inputElement.addEventListener('input', () => {
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener("input", () => {
       checkInputValidity(formElement, inputElement);
       toggleButtonState(inputList, buttonElement);
     });
   });
 }
 
-function enableValidation(names) {
-  selectorNames = names;
+function enableValidation() {
   const formElements = Array.from(
     document.querySelectorAll(selectorNames.formSelector)
   );
-  formElements.forEach(formElement => {
-    formElement.addEventListener('submit', evt => {
+  formElements.forEach((formElement) => {
+    formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
     });
+
     setEventListeners(formElement);
   });
 }
@@ -75,16 +72,9 @@ function hideFormErrors(formElement) {
   const inputList = Array.from(
     formElement.querySelectorAll(selectorNames.inputSelector)
   );
-  inputList.forEach(inputElement => {
+  inputList.forEach((inputElement) => {
     hideInputError(formElement, inputElement);
   });
 }
 
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible',
-});
+enableValidation();
