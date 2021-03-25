@@ -55,7 +55,7 @@ function setEventListeners(formElement) {
   });
 }
 
-function enableValidation() {
+function enableValidation(selectorNames) {
   const formElements = Array.from(
     document.querySelectorAll(selectorNames.formSelector)
   );
@@ -77,4 +77,4 @@ function hideFormErrors(formElement) {
   });
 }
 
-enableValidation();
+enableValidation(selectorNames);
