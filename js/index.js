@@ -32,6 +32,18 @@ const editFormValidator = new FormValidator(selectorNames, editForm);
 const addCardFormValidator = new FormValidator(selectorNames, addForm);
 
 // functions
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+  document.addEventListener('click', handleCloseEvent);
+  document.addEventListener('keydown', handleCloseEvent);
+}
+
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+  document.removeEventListener('click', handleCloseEvent);
+  document.removeEventListener('keydown', handleCloseEvent);
+}
+
 function handlePopupOpen(popup) {
   if (popup.classList.contains('popup_type_edit')) {
     editForm.reset();
@@ -45,16 +57,7 @@ function handlePopupOpen(popup) {
 
     addCardFormValidator.enableValidation(addPopup);
   }
-
-  popup.classList.add('popup_opened');
-  document.addEventListener('click', handleCloseEvent);
-  document.addEventListener('keydown', handleCloseEvent);
-}
-
-function handleClosePopup(popup) {
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('click', handleCloseEvent);
-  document.removeEventListener('keydown', handleCloseEvent);
+  openPopup(popup);
 }
 
 function handleCloseEvent(evt) {
@@ -62,7 +65,7 @@ function handleCloseEvent(evt) {
     const popupOpened = document.querySelector('.popup_opened');
 
     if (popupOpened) {
-      handleClosePopup(popupOpened);
+      closePopup(popupOpened);
     }
   }
 }
@@ -76,9 +79,9 @@ initialCards.forEach(data => {
 // Event Listeners
 editButton.addEventListener('click', () => handlePopupOpen(editPopup));
 addButton.addEventListener('click', () => handlePopupOpen(addPopup));
-closeImageButton.addEventListener('click', () => handleClosePopup(imagePopup));
-closeEditButton.addEventListener('click', () => handleClosePopup(editPopup));
-closeCardButton.addEventListener('click', () => handleClosePopup(addPopup));
+closeImageButton.addEventListener('click', () => closePopup(imagePopup));
+closeEditButton.addEventListener('click', () => closePopup(editPopup));
+closeCardButton.addEventListener('click', () => closePopup(addPopup));
 
 editForm.addEventListener('submit', e => {
   e.preventDefault();
@@ -86,7 +89,7 @@ editForm.addEventListener('submit', e => {
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
 
-  handleClosePopup(editPopup);
+  closePopup(editPopup);
 });
 
 addForm.addEventListener('submit', e => {
@@ -99,5 +102,5 @@ addForm.addEventListener('submit', e => {
     const newCard = new Card({ name, link }, CARD_TEMPLATE_SELECTOR);
     cardsList.prepend(newCard.generateCard(imagePopup, handlePopupOpen));
   }
-  handleClosePopup(addPopup);
+  closePopup(addPopup);
 });
