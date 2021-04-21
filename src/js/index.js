@@ -1,3 +1,4 @@
+import '../pages/index.css';
 import { selectorNames, CARD_TEMPLATE_SELECTOR } from '../utils/constants.js';
 import initialCards from './initial-cards.js';
 import Card from './Card.js';

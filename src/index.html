@@ -6,18 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Russian travel">
   <meta name="author" content="Alexey Kremnev">
-  <link rel="stylesheet" href="pages/index.css">
   <title>Mesto</title>
 </head>
 
 <body>
   <div class="page">
     <header class="header">
-      <img class="header__logo" src="images/logo.svg" alt="лого">
+      <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="лого">
     </header>
     <main class="content">
       <section class="profile">
-        <img class="profile__avatar" src="images/avatar.jpg" alt="Кусто">
+        <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Кусто">
         <div class="profile__info">
           <div class="profile__info-top">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -79,7 +78,6 @@
       </div>
     </li>
   </template>
-  <script type="module" src="js/index.js"></script>
 </body>
 
 </html>
