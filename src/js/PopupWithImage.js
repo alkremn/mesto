@@ -12,6 +12,7 @@ export default class PopupWithImage extends Popup {
     const description = this._popup.querySelector('.popup__caption');
     description.textContent = name;
 
+    super.setEventListeners();
     super.open();
   }
 }
