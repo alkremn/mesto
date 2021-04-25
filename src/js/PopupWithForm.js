@@ -13,15 +13,11 @@ export default class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    return {
-      firstInput: this._inputs[0].value,
-      secondInput: this._inputs[1].value,
-    };
-  }
-
-  setInputValues({ name, job }) {
-    this._inputs[0].value = name;
-    this._inputs[1].value = job;
+    const values = {};
+    this._inputs.forEach(input => {
+      values[input.name] = input.value;
+    });
+    return values;
   }
 
   _handleSubmitClick(e) {
@@ -35,9 +31,7 @@ export default class PopupWithForm extends Popup {
   }
 
   close() {
-    const form = this._popup.querySelector('.popup__form');
-    form.reset();
-    this._popupForm.removeEventListener('submit', this._handleSubmitClick);
+    this._popupForm.reset();
     super.close();
   }
 }

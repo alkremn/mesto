@@ -1,20 +1,34 @@
-import '../pages/index.css';
+import './index.css';
 import { selectorNames } from '../utils/constants.js';
-import initialCards from './initial-cards.js';
-import Section from './Section.js';
-import Card from './Card.js';
-import PopupWithImage from './PopupWithImage';
-import PopupWithForm from './PopupWithForm';
-import UserInfo from './UserInfo';
-import FormValidator from './FormValidator.js';
+import initialCards from '../js/initial-cards.js';
+import Section from '../js/Section.js';
+import Card from '../js/Card.js';
+import PopupWithImage from '../js/PopupWithImage.js';
+import PopupWithForm from '../js/PopupWithForm.js';
+import UserInfo from '../js/UserInfo.js';
+import FormValidator from '../js/FormValidator.js';
 
 const editButton = document.querySelector(selectorNames.editButtonSelector);
 const addButton = document.querySelector(selectorNames.addButtonSelector);
+const nameInput = document.querySelector('#name-input');
+const jobInput = document.querySelector('#job-input');
 
 const userInfo = new UserInfo({
   nameSelector: selectorNames.nameSelector,
   jobSelector: selectorNames.jobSelector,
 });
+
+const popupImage = new PopupWithImage(selectorNames.imagePopupSelector);
+
+const editPopupForm = new PopupWithForm(
+  selectorNames.editPopupSelector,
+  handleEditFormSubmit
+);
+
+const addPopupForm = new PopupWithForm(
+  selectorNames.addPopupSelector,
+  handleAddFormSubmit
+);
 
 const editFormValidator = new FormValidator(
   selectorNames,
@@ -30,8 +44,18 @@ const addCardFormValidator = new FormValidator(
     .querySelector(selectorNames.formSelector)
 );
 
+const section = new Section(
+  {
+    items: initialCards,
+    renderer: item => {
+      section.appendItem(createCardElement(item));
+    },
+  },
+  selectorNames.cardsContainer
+);
+
+// Functions
 function handleCardClick(name, link) {
-  const popupImage = new PopupWithImage(selectorNames.imagePopupSelector);
   popupImage.open(name, link);
 }
 
@@ -44,56 +68,41 @@ function createCardElement(item) {
   return card.generateCard();
 }
 
-const section = new Section(
-  {
-    items: initialCards,
-    renderer: item => {
-      section.addItem(createCardElement(item));
-    },
-  },
-  selectorNames.cardsContainer
-);
-
 function handleEditFormSubmit(evt, values) {
   evt.preventDefault();
-  userInfo.setUserInfo(values.firstInput, values.secondInput);
+  userInfo.setUserInfo(values);
 }
 
 function handleAddFormSubmit(evt, values) {
   evt.preventDefault();
   const newCard = createCardElement({
-    name: values.firstInput,
-    link: values.secondInput,
+    name: values.title,
+    link: values.link,
   });
   section.prependItem(newCard);
 }
 
+// Event Listeners
 editButton.addEventListener('click', () => {
-  const editPopupForm = new PopupWithForm(
-    selectorNames.editPopupSelector,
-    handleEditFormSubmit
-  );
-  editPopupForm.setInputValues(userInfo.getUserInfo());
-  editPopupForm.setEventListeners();
+  const values = userInfo.getUserInfo();
+  nameInput.value = values.name;
+  jobInput.value = values.job;
 
   editFormValidator.resetValidation();
-  editFormValidator.enableValidation();
-
-  editFormValidator.enableValidation();
-  editPopupForm.open(userInfo.getUserInfo());
+  editPopupForm.open();
 });
 
 addButton.addEventListener('click', () => {
-  const addPopupForm = new PopupWithForm(
-    selectorNames.addPopupSelector,
-    handleAddFormSubmit
-  );
-
   addCardFormValidator.resetValidation();
-  addCardFormValidator.enableValidation();
-
-  addPopupForm.setEventListeners();
   addPopupForm.open();
 });
+
+popupImage.setEventListeners();
+
+editPopupForm.setEventListeners();
+editFormValidator.enableValidation();
+
+addPopupForm.setEventListeners();
+addCardFormValidator.enableValidation();
 
 section.renderElements();
