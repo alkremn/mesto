@@ -1,12 +1,12 @@
 import './index.css';
 import { selectorNames } from '../utils/constants.js';
-import initialCards from '../js/initial-cards.js';
-import Section from '../js/Section.js';
-import Card from '../js/Card.js';
-import PopupWithImage from '../js/PopupWithImage.js';
-import PopupWithForm from '../js/PopupWithForm.js';
-import UserInfo from '../js/UserInfo.js';
-import FormValidator from '../js/FormValidator.js';
+import initialCards from '../utils/initial-cards.js';
+import Section from '../components/Section.js';
+import Card from '../components/Card.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
+import FormValidator from '../components/FormValidator.js';
 
 const editButton = document.querySelector(selectorNames.editButtonSelector);
 const addButton = document.querySelector(selectorNames.addButtonSelector);
