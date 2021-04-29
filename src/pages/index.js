@@ -1,6 +1,6 @@
 import './index.css';
-import { selectorNames } from '../utils/constants.js';
-import initialCards from '../utils/initial-cards.js';
+import { selectorNames, options } from '../utils/constants.js';
+import Api from '../utils/api.js';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import PopupWithImage from '../components/PopupWithImage.js';
@@ -8,15 +8,36 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js';
 
+const userInfo = new UserInfo({
+  nameSelector: selectorNames.nameSelector,
+  aboutSelector: selectorNames.aboutSelector,
+  avatarSelector: selectorNames.avatarSelector,
+});
+
+const api = new Api(options);
+
+api.getUserInfo().then(userData => {
+  console.log(userData);
+  userInfo.setUserInfo(userData);
+});
+
+api.getInitialCards().then(cards => {
+  const section = new Section(
+    {
+      items: cards,
+      renderer: item => {
+        section.appendItem(createCardElement(item));
+      },
+    },
+    selectorNames.cardsContainer
+  );
+  section.renderElements();
+});
+
 const editButton = document.querySelector(selectorNames.editButtonSelector);
 const addButton = document.querySelector(selectorNames.addButtonSelector);
 const nameInput = document.querySelector('#name-input');
-const jobInput = document.querySelector('#job-input');
-
-const userInfo = new UserInfo({
-  nameSelector: selectorNames.nameSelector,
-  jobSelector: selectorNames.jobSelector,
-});
+const aboutInput = document.querySelector('#about-input');
 
 const popupImage = new PopupWithImage(selectorNames.imagePopupSelector);
 
@@ -42,16 +63,6 @@ const addCardFormValidator = new FormValidator(
   document
     .querySelector(selectorNames.addPopupSelector)
     .querySelector(selectorNames.formSelector)
-);
-
-const section = new Section(
-  {
-    items: initialCards,
-    renderer: item => {
-      section.appendItem(createCardElement(item));
-    },
-  },
-  selectorNames.cardsContainer
 );
 
 // Functions
@@ -86,7 +97,7 @@ function handleAddFormSubmit(evt, values) {
 editButton.addEventListener('click', () => {
   const values = userInfo.getUserInfo();
   nameInput.value = values.name;
-  jobInput.value = values.job;
+  aboutInput.value = values.about;
 
   editFormValidator.resetValidation();
   editPopupForm.open();
@@ -104,5 +115,3 @@ editFormValidator.enableValidation();
 
 addPopupForm.setEventListeners();
 addCardFormValidator.enableValidation();
-
-section.renderElements();

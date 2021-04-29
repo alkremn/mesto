@@ -14,6 +14,12 @@ export const selectorNames = {
   cardTemplateSelector: '#card-template',
   cardsContainer: '.cards__list',
   imagePopupSelector: '.popup_type_image',
+  avatarSelector: '.profile__avatar',
   nameSelector: '.profile__name',
-  jobSelector: '.profile__job'
+  aboutSelector: '.profile__about',
+};
+export const options = {
+  baseUrl: 'https://mesto.nomoreparties.co/v1/',
+  token: '6f616b6f-c1d8-411b-9135-7b1b5e25dc55',
+  group_id: 'cohort-23',
 };
