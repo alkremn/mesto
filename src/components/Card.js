@@ -1,7 +1,10 @@
 export default class Card {
   constructor(data, cardSelector, handleCardClick) {
+    console.log(data);
+    this._ownerId = data.owner._id;
     this._name = data.name;
     this._link = data.link;
+    this._likeCount = data.likes.length;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleCardClick = this._handleCardClick.bind(this);
@@ -35,11 +38,22 @@ export default class Card {
     });
   }
 
-  generateCard() {
+  generateCard(userId) {
+    console.log(userId, this._ownerId);
     this._element = this._getTemplate();
     this._imageElement = this._element.querySelector('.card__image');
 
     this._setEventListeners();
+
+    if (userId !== this._ownerId) {
+      this._element
+        .querySelector('.card__delete-button')
+        .classList.add('card__delete-button--disabled');
+    }
+
+    this._element.querySelector(
+      '.card__like-count'
+    ).textContent = this._likeCount;
 
     this._element.querySelector('.card__title').textContent = this._name;
     this._imageElement.src = this._link;

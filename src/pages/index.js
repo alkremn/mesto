@@ -17,7 +17,6 @@ const userInfo = new UserInfo({
 const api = new Api(options);
 
 api.getUserInfo().then(userData => {
-  console.log(userData);
   userInfo.setUserInfo(userData);
 });
 
@@ -76,11 +75,12 @@ function createCardElement(item) {
     selectorNames.cardTemplateSelector,
     handleCardClick
   );
-  return card.generateCard();
+  return card.generateCard(userInfo._id, item.owner._id);
 }
 
 function handleEditFormSubmit(evt, values) {
   evt.preventDefault();
+  api.updateUserInfo(values);
   userInfo.setUserInfo(values);
 }
 

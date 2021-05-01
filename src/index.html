@@ -16,7 +16,7 @@
     </header>
     <main class="content">
       <section class="profile">
-        <img class="profile__avatar"  src="<%=require('./images/avatar.jpg')%>" alt="Jacques Cousteau">
+        <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Jacques Cousteau">
         <div class="profile__info">
           <div class="profile__info-top">
             <h1 class="profile__name"></h1>
@@ -74,7 +74,10 @@
       <button class="card__delete-button" type="button"></button>
       <div class="card__description">
         <h2 class="card__title"></h2>
-        <button class="card__like-button" type="button"></button>
+        <div class="card__like-section">
+          <button class="card__like-button" type="button"></button>
+          <span class="card__like-count"></span>
+        </div>
       </div>
     </li>
   </template>
