@@ -15,7 +15,9 @@ export const selectorNames = {
   cardTemplateSelector: '#card-template',
   cardsContainer: '.cards__list',
   imagePopupSelector: '.popup_type_image',
-  avatarSelector: '.profile__avatar-container',
+  avatarSelector: '.profile__avatar',
+  editAvatarSelector: '.profile__avatar-button',
+  avatarEditPopupSelector: '.popup_type_avatar-edit',
   nameSelector: '.profile__name',
   aboutSelector: '.profile__about',
 };

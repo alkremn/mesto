@@ -10,7 +10,9 @@ import FormValidator from '../components/FormValidator.js';
 
 const editButton = document.querySelector(selectorNames.editButtonSelector);
 const addButton = document.querySelector(selectorNames.addButtonSelector);
-const avatarContainer = document.querySelector(selectorNames.avatarSelector);
+const editAvatarButton = document.querySelector(
+  selectorNames.editAvatarSelector
+);
 const nameInput = document.querySelector('#name-input');
 const aboutInput = document.querySelector('#about-input');
 
@@ -42,6 +44,11 @@ const section = new Section(
 );
 
 const popupImage = new PopupWithImage(selectorNames.imagePopupSelector);
+
+const editAvatarForm = new PopupWithForm(
+  selectorNames.avatarEditPopupSelector,
+  handleEditAvatarSubmit
+);
 
 const editPopupForm = new PopupWithForm(
   selectorNames.editPopupSelector,
@@ -98,6 +105,9 @@ function createCardElement(item) {
   return card.generateCard(userInfo._id, item.owner._id);
 }
 
+// Submit functions
+function handleEditAvatarSubmit(evt, values) {}
+
 function handleEditFormSubmit(evt, values) {
   evt.preventDefault();
   api
@@ -119,8 +129,8 @@ function handleAddFormSubmit(evt, values) {
 }
 
 // Event Listeners
-avatarContainer.addEventListener('click', () => {
-  console.log("hellow");
+editAvatarButton.addEventListener('click', () => {
+  editAvatarForm.open();
 });
 
 editButton.addEventListener('click', () => {
@@ -137,12 +147,12 @@ addButton.addEventListener('click', () => {
   addPopupForm.open();
 });
 
+editAvatarForm.setEventListeners();
 popupImage.setEventListeners();
-
 deleteConfirmForm.setEventListeners();
-
 editPopupForm.setEventListeners();
-editFormValidator.enableValidation();
-
 addPopupForm.setEventListeners();
+
+// Enable Validation
+editFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
