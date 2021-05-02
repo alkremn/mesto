@@ -1,5 +1,6 @@
 export const ERROR_MESSAGE = 'Вы пропустили это поле.';
 export const ESC_CODE = 27;
+export const LOADING_TEXT = 'Сохранение...';
 export const selectorNames = {
   editButtonSelector: '.profile__edit-button',
   addButtonSelector: '.profile__add-button',
@@ -20,9 +21,10 @@ export const selectorNames = {
   avatarEditPopupSelector: '.popup_type_avatar-edit',
   nameSelector: '.profile__name',
   aboutSelector: '.profile__about',
+  buttonConfirmSelector: '.popup__button-confirm',
 };
 export const options = {
-  baseUrl: 'https://mesto.nomoreparties.co/v1/',
+  baseUrl: 'https://mesto.nomoreparties.co/v1',
   token: '6f616b6f-c1d8-411b-9135-7b1b5e25dc55',
   group_id: 'cohort-23',
 };

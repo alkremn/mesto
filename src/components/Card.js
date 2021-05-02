@@ -20,7 +20,7 @@ export default class Card {
   }
 
   _handleDelete(e) {
-    this._handleDeleteConfirm(e, this._id);
+    this._handleDeleteConfirm(this._id);
   }
 
   _handleLikeIcon() {

@@ -5,11 +5,15 @@ import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import ConfirmPopup from '../components/ConfirmPopup';
 import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js';
 
 const editButton = document.querySelector(selectorNames.editButtonSelector);
 const addButton = document.querySelector(selectorNames.addButtonSelector);
+const deleteButton = document.querySelector(
+  selectorNames.buttonConfirmSelector
+);
 const editAvatarButton = document.querySelector(
   selectorNames.editAvatarSelector
 );
@@ -18,14 +22,20 @@ const aboutInput = document.querySelector('#about-input');
 
 const api = new Api(options);
 
-api.getUserInfo().then(userData => {
-  userInfo.setUserInfo(userData);
-});
+api
+  .getUserInfo()
+  .then(userData => {
+    userInfo.setUserInfo(userData);
+  })
+  .catch(error => console.log(error));
 
-api.getInitialCards().then(cards => {
-  section.addItems(cards);
-  section.renderElements();
-});
+api
+  .getInitialCards()
+  .then(cards => {
+    section.addItems(cards);
+    section.renderElements();
+  })
+  .catch(error => console.log(error));
 
 const userInfo = new UserInfo({
   nameSelector: selectorNames.nameSelector,
@@ -55,14 +65,21 @@ const editPopupForm = new PopupWithForm(
   handleEditFormSubmit
 );
 
-const deleteConfirmForm = new PopupWithForm(
+const deleteConfirmPopup = new ConfirmPopup(
   selectorNames.deletePopupSelector,
-  handleDeleteCard
+  handleCardDelete
 );
 
 const addPopupForm = new PopupWithForm(
   selectorNames.addPopupSelector,
   handleAddFormSubmit
+);
+
+const aditAvatarValidator = new FormValidator(
+  selectorNames,
+  document
+    .querySelector(selectorNames.avatarEditPopupSelector)
+    .querySelector(selectorNames.formSelector)
 );
 
 const editFormValidator = new FormValidator(
@@ -84,15 +101,23 @@ function handleCardClick(name, link) {
   popupImage.open(name, link);
 }
 
-function handleDeleteCard(e, cardId) {
+function handleCardDelete(e, cardId) {
   e.preventDefault();
-  console.log(cardId);
+
+  deleteConfirmPopup.setLoading(true);
+  api
+    .removeCard(cardId)
+    .then(data => {
+      section.removeItem(cardId);
+      deleteConfirmPopup.setLoading(false);
+      deleteConfirmPopup.close();
+    })
+    .catch(error => console.log(error));
 }
 
-function handleDeleteConfirm(e, cardId) {
-  deleteConfirmForm.open();
-  // api.removeCard(cardId).then(data => console.log(data));
-  //e.target.closest('.card').remove();
+function handleDeleteConfirm(cardId) {
+  deleteConfirmPopup.setId(cardId);
+  deleteConfirmPopup.open();
 }
 
 function createCardElement(item) {
@@ -106,23 +131,44 @@ function createCardElement(item) {
 }
 
 // Submit functions
-function handleEditAvatarSubmit(evt, values) {}
-
-function handleEditFormSubmit(evt, values) {
+function handleEditAvatarSubmit(evt, { link }, closePopup) {
   evt.preventDefault();
+  editAvatarForm.setLoading(true);
+  api
+    .updateAvatarLink(link)
+    .then(data => {
+      userInfo.setUserInfo(data);
+      editAvatarForm.setLoading(false);
+      closePopup();
+    })
+    .catch(error => console.log(error));
+}
+
+function handleEditFormSubmit(evt, values, closePopup) {
+  evt.preventDefault();
+  editPopupForm.setLoading(true);
   api
     .updateUserInfo(values)
-    .then(data => userInfo.setUserInfo(data))
+    .then(data => {
+      userInfo.setUserInfo(data);
+      editPopupForm.setLoading(false);
+      closePopup();
+    })
     .catch(err => console.log(err));
 }
 
-function handleAddFormSubmit(evt, values) {
+function handleAddFormSubmit(evt, values, closePopup) {
   evt.preventDefault();
+  addPopupForm.setLoading(true);
   api
     .postNewCard({ name: values.title, link: values.link })
     .then(card => {
+      addPopupForm.setLoading(false);
+      closePopup();
       if (section) {
-        section.prependItem(createCardElement(card));
+        const card = createCardElement(card);
+        section.addItem(card);
+        section.prependItem(card);
       }
     })
     .catch(err => console.log(err));
@@ -130,6 +176,7 @@ function handleAddFormSubmit(evt, values) {
 
 // Event Listeners
 editAvatarButton.addEventListener('click', () => {
+  aditAvatarValidator.resetValidation();
   editAvatarForm.open();
 });
 
@@ -149,10 +196,11 @@ addButton.addEventListener('click', () => {
 
 editAvatarForm.setEventListeners();
 popupImage.setEventListeners();
-deleteConfirmForm.setEventListeners();
+deleteConfirmPopup.setEventListeners();
 editPopupForm.setEventListeners();
 addPopupForm.setEventListeners();
 
 // Enable Validation
+aditAvatarValidator.enableValidation();
 editFormValidator.enableValidation();
 addCardFormValidator.enableValidation();

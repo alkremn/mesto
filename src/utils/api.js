@@ -5,15 +5,19 @@ export default class Api {
     this.group_id = options.group_id;
   }
 
-  _makeRequest(url) {
+  _makeRequest(url, method, body) {
+    console.log(url, method, body);
     return fetch(url, {
+      method,
       headers: {
         authorization: this.token,
+        'Content-Type': 'application/json',
       },
-    }).then(res => this._checkRequest(res));
+      body,
+    }).then(res => this._checkResponse(res));
   }
 
-  _checkRequest(res) {
+  _checkResponse(res) {
     if (res.ok) {
       return res.json();
     }
@@ -21,18 +25,26 @@ export default class Api {
   }
 
   getUserInfo() {
-    return this._makeRequest(`${this.baseUrl}/${this.group_id}/users/me`);
+    return this._makeRequest(
+      `${this.baseUrl}/${this.group_id}/users/me`,
+      'GET'
+    );
   }
 
   updateUserInfo({ name, about }) {
-    return fetch(`${this.baseUrl}/${this.group_id}/users/me`, {
-      method: 'PATCH',
-      headers: {
-        authorization: this.token,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, about }),
-    }).then(res => this._checkRequest(res));
+    return this._makeRequest(
+      `${this.baseUrl}/${this.group_id}/users/me`,
+      'PATCH',
+      JSON.stringify({ name, about })
+    );
+  }
+
+  updateAvatarLink(link) {
+    return this._makeRequest(
+      `${this.baseUrl}/${this.group_id}/users/me/avatar`,
+      'PATCH',
+      JSON.stringify({ avatar: link })
+    );
   }
 
   getInitialCards() {
@@ -40,22 +52,17 @@ export default class Api {
   }
 
   postNewCard({ name, link }) {
-    return fetch(`${this.baseUrl}/${this.group_id}/cards`, {
-      method: 'POST',
-      headers: {
-        authorization: this.token,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, link }),
-    }).then(res => this._checkRequest(res));
+    return this._makeRequest(
+      `${this.baseUrl}/${this.group_id}/cards`,
+      'POST',
+      JSON.stringify({ name, link })
+    );
   }
   removeCard(cardId) {
-    return fetch(`${this.baseUrl}/${this.group_id}/cards/${cardId}`, {
-      method: 'DELETE',
-      headers: {
-        authorization: this.token,
-        'Content-Type': 'application/json',
-      },
-    }).then(res => this._checkRequest(res));
+    console.log(cardId);
+    return this._makeRequest(
+      `${this.baseUrl}/${this.group_id}/cards/${cardId}`,
+      'DELETE'
+    );
   }
 }

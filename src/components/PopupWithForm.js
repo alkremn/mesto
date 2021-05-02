@@ -1,4 +1,4 @@
-import { selectorNames } from '../utils/constants.js';
+import { selectorNames, LOADING_TEXT } from '../utils/constants.js';
 import Popup from './Popup.js';
 
 export default class PopupWithForm extends Popup {
@@ -8,6 +8,8 @@ export default class PopupWithForm extends Popup {
       this._popup.querySelectorAll(selectorNames.inputSelector)
     );
     this._popupForm = this._popup.querySelector(selectorNames.formSelector);
+    this._formButton = this._popupForm.querySelector('.popup__button');
+    this._defaultButtonText = this._formButton.textContent;
     this._handleFormSubmit = handleFormSubmit;
     this._handleSubmitClick = this._handleSubmitClick.bind(this);
   }
@@ -21,8 +23,7 @@ export default class PopupWithForm extends Popup {
   }
 
   _handleSubmitClick(e) {
-    this._handleFormSubmit(e, this._getInputValues());
-    this.close();
+    this._handleFormSubmit(e, this._getInputValues(), this.close);
   }
 
   setEventListeners() {
@@ -33,5 +34,10 @@ export default class PopupWithForm extends Popup {
   close() {
     this._popupForm.reset();
     super.close();
+  }
+  setLoading(isLoading) {
+    this._formButton.textContent = isLoading
+      ? LOADING_TEXT
+      : this._defaultButtonText;
   }
 }
