@@ -1,6 +1,6 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick) {
-    console.log(data);
+  constructor(data, cardSelector, handleCardClick, handleDeleteConfirm) {
+    this._id = data._id;
     this._ownerId = data.owner._id;
     this._name = data.name;
     this._link = data.link;
@@ -8,6 +8,8 @@ export default class Card {
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleCardClick = this._handleCardClick.bind(this);
+    this._handleDelete = this._handleDelete.bind(this);
+    this._handleDeleteConfirm = handleDeleteConfirm;
   }
 
   _getTemplate() {
@@ -18,7 +20,7 @@ export default class Card {
   }
 
   _handleDelete(e) {
-    e.target.closest('.card').remove();
+    this._handleDeleteConfirm(e, this._id);
   }
 
   _handleLikeIcon() {
@@ -39,7 +41,6 @@ export default class Card {
   }
 
   generateCard(userId) {
-    console.log(userId, this._ownerId);
     this._element = this._getTemplate();
     this._imageElement = this._element.querySelector('.card__image');
 

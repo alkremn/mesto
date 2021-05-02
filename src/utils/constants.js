@@ -5,6 +5,7 @@ export const selectorNames = {
   addButtonSelector: '.profile__add-button',
   editPopupSelector: '.popup_type_edit',
   addPopupSelector: '.popup_type_new-card',
+  deletePopupSelector: '.popup_type_delete-confirm',
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
@@ -14,7 +15,7 @@ export const selectorNames = {
   cardTemplateSelector: '#card-template',
   cardsContainer: '.cards__list',
   imagePopupSelector: '.popup_type_image',
-  avatarSelector: '.profile__avatar',
+  avatarSelector: '.profile__avatar-container',
   nameSelector: '.profile__name',
   aboutSelector: '.profile__about',
 };

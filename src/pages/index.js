@@ -8,11 +8,11 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js';
 
-const userInfo = new UserInfo({
-  nameSelector: selectorNames.nameSelector,
-  aboutSelector: selectorNames.aboutSelector,
-  avatarSelector: selectorNames.avatarSelector,
-});
+const editButton = document.querySelector(selectorNames.editButtonSelector);
+const addButton = document.querySelector(selectorNames.addButtonSelector);
+const avatarContainer = document.querySelector(selectorNames.avatarSelector);
+const nameInput = document.querySelector('#name-input');
+const aboutInput = document.querySelector('#about-input');
 
 const api = new Api(options);
 
@@ -21,28 +21,36 @@ api.getUserInfo().then(userData => {
 });
 
 api.getInitialCards().then(cards => {
-  const section = new Section(
-    {
-      items: cards,
-      renderer: item => {
-        section.appendItem(createCardElement(item));
-      },
-    },
-    selectorNames.cardsContainer
-  );
+  section.addItems(cards);
   section.renderElements();
 });
 
-const editButton = document.querySelector(selectorNames.editButtonSelector);
-const addButton = document.querySelector(selectorNames.addButtonSelector);
-const nameInput = document.querySelector('#name-input');
-const aboutInput = document.querySelector('#about-input');
+const userInfo = new UserInfo({
+  nameSelector: selectorNames.nameSelector,
+  aboutSelector: selectorNames.aboutSelector,
+  avatarSelector: selectorNames.avatarSelector,
+});
+
+const section = new Section(
+  {
+    items: null,
+    renderer: item => {
+      section.appendItem(createCardElement(item));
+    },
+  },
+  selectorNames.cardsContainer
+);
 
 const popupImage = new PopupWithImage(selectorNames.imagePopupSelector);
 
 const editPopupForm = new PopupWithForm(
   selectorNames.editPopupSelector,
   handleEditFormSubmit
+);
+
+const deleteConfirmForm = new PopupWithForm(
+  selectorNames.deletePopupSelector,
+  handleDeleteCard
 );
 
 const addPopupForm = new PopupWithForm(
@@ -69,31 +77,52 @@ function handleCardClick(name, link) {
   popupImage.open(name, link);
 }
 
+function handleDeleteCard(e, cardId) {
+  e.preventDefault();
+  console.log(cardId);
+}
+
+function handleDeleteConfirm(e, cardId) {
+  deleteConfirmForm.open();
+  // api.removeCard(cardId).then(data => console.log(data));
+  //e.target.closest('.card').remove();
+}
+
 function createCardElement(item) {
   const card = new Card(
     item,
     selectorNames.cardTemplateSelector,
-    handleCardClick
+    handleCardClick,
+    handleDeleteConfirm
   );
   return card.generateCard(userInfo._id, item.owner._id);
 }
 
 function handleEditFormSubmit(evt, values) {
   evt.preventDefault();
-  api.updateUserInfo(values);
-  userInfo.setUserInfo(values);
+  api
+    .updateUserInfo(values)
+    .then(data => userInfo.setUserInfo(data))
+    .catch(err => console.log(err));
 }
 
 function handleAddFormSubmit(evt, values) {
   evt.preventDefault();
-  const newCard = createCardElement({
-    name: values.title,
-    link: values.link,
-  });
-  section.prependItem(newCard);
+  api
+    .postNewCard({ name: values.title, link: values.link })
+    .then(card => {
+      if (section) {
+        section.prependItem(createCardElement(card));
+      }
+    })
+    .catch(err => console.log(err));
 }
 
 // Event Listeners
+avatarContainer.addEventListener('click', () => {
+  console.log("hellow");
+});
+
 editButton.addEventListener('click', () => {
   const values = userInfo.getUserInfo();
   nameInput.value = values.name;
@@ -109,6 +138,8 @@ addButton.addEventListener('click', () => {
 });
 
 popupImage.setEventListeners();
+
+deleteConfirmForm.setEventListeners();
 
 editPopupForm.setEventListeners();
 editFormValidator.enableValidation();
