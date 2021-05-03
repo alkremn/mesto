@@ -1,4 +1,4 @@
-import { LOADING_TEXT } from '../utils/constants';
+import { DELETING_TEXT } from '../utils/constants';
 import Popup from './Popup';
 
 export default class ConfirmPopup extends Popup {
@@ -10,8 +10,8 @@ export default class ConfirmPopup extends Popup {
     this._handleConfirmClick = this._handleConfirmClick.bind(this);
   }
 
-  _handleConfirmClick(e) {
-    this._handleDelete(e, this._id);
+  _handleConfirmClick() {
+    this._handleDelete(this._card, this._id);
   }
 
   open() {
@@ -24,14 +24,14 @@ export default class ConfirmPopup extends Popup {
     super.close();
   }
 
-  setId(id) {
+  setData(card, id) {
+    this._card = card;
     this._id = id;
   }
 
   setLoading(isLoading) {
-    console.log(this._confirmButton);
     this._confirmButton.textContent = isLoading
-      ? LOADING_TEXT
+      ? DELETING_TEXT
       : this._defaultButtonText;
   }
 }

@@ -1,6 +1,7 @@
 export const ERROR_MESSAGE = 'Вы пропустили это поле.';
 export const ESC_CODE = 27;
-export const LOADING_TEXT = 'Сохранение...';
+export const SAVING_TEXT = 'Сохранение...';
+export const DELETING_TEXT = 'Удаление...';
 export const selectorNames = {
   editButtonSelector: '.profile__edit-button',
   addButtonSelector: '.profile__add-button',
@@ -22,6 +23,7 @@ export const selectorNames = {
   nameSelector: '.profile__name',
   aboutSelector: '.profile__about',
   buttonConfirmSelector: '.popup__button-confirm',
+  cardLikeButtonActive: 'card__like-button_active',
 };
 export const options = {
   baseUrl: 'https://mesto.nomoreparties.co/v1',

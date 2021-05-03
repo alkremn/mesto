@@ -1,5 +1,13 @@
+import { selectorNames } from '../utils/constants';
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, handleDeleteConfirm) {
+  constructor(
+    data,
+    userId,
+    cardSelector,
+    handleCardClick,
+    handleDeleteConfirm,
+    handleLikeButton
+  ) {
     this._id = data._id;
     this._ownerId = data.owner._id;
     this._name = data.name;
@@ -10,6 +18,10 @@ export default class Card {
     this._handleCardClick = this._handleCardClick.bind(this);
     this._handleDelete = this._handleDelete.bind(this);
     this._handleDeleteConfirm = handleDeleteConfirm;
+    this._handleLikeButton = handleLikeButton;
+    this._handleLikeButton = this._handleLikeButton.bind(this);
+    this.updateLikeCount = this.updateLikeCount.bind(this);
+    this._isLiked = data.likes.find(like => like._id == userId);
   }
 
   _getTemplate() {
@@ -19,12 +31,20 @@ export default class Card {
       .cloneNode(true);
   }
 
-  _handleDelete(e) {
-    this._handleDeleteConfirm(this._id);
+  _handleDelete(evt) {
+    this._handleDeleteConfirm(evt, this._id);
   }
 
   _handleLikeIcon() {
-    this._likeButton.classList.toggle('card__like-button_active');
+    if (this._isLiked) {
+      this._likeButton.classList.remove('card__like-button_active');
+      this._isLiked = false;
+      this._handleLikeButton(this._isLiked, this._id, this.updateLikeCount);
+    } else {
+      this._likeButton.classList.add('card__like-button_active');
+      this._isLiked = true;
+      this._handleLikeButton(this._isLiked, this._id, this.updateLikeCount);
+    }
   }
 
   _setEventListeners() {
@@ -52,14 +72,20 @@ export default class Card {
         .classList.add('card__delete-button--disabled');
     }
 
-    this._element.querySelector(
-      '.card__like-count'
-    ).textContent = this._likeCount;
+    this._isLiked
+      ? this._likeButton.classList.add('card__like-button_active')
+      : this._likeButton.classList.remove('card__like-button_active');
+
+    this.updateLikeCount(this._likeCount);
 
     this._element.querySelector('.card__title').textContent = this._name;
     this._imageElement.src = this._link;
     this._imageElement.alt = this._name;
 
     return this._element;
+  }
+
+  updateLikeCount(count) {
+    this._element.querySelector('.card__like-count').textContent = count;
   }
 }

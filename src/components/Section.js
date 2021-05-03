@@ -12,18 +12,15 @@ export default class Section {
   }
 
   addItem(item) {
-    this._items.add(item);
+    this._items.push(item);
   }
 
   addItems(items) {
     this._items = items;
   }
 
-  removeItem(itemId) {
-    console.log(itemId);
-    console.log(this._items);
-    const element = this._items.find(item => item._id == itemId);
-    console.log(element);
+  removeItem(item) {
+    this._container.removeChild(item);
   }
 
   appendItem(element) {

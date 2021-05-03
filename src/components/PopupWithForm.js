@@ -1,4 +1,4 @@
-import { selectorNames, LOADING_TEXT } from '../utils/constants.js';
+import { selectorNames, SAVING_TEXT } from '../utils/constants.js';
 import Popup from './Popup.js';
 
 export default class PopupWithForm extends Popup {
@@ -37,7 +37,7 @@ export default class PopupWithForm extends Popup {
   }
   setLoading(isLoading) {
     this._formButton.textContent = isLoading
-      ? LOADING_TEXT
+      ? SAVING_TEXT
       : this._defaultButtonText;
   }
 }

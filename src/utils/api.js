@@ -6,7 +6,6 @@ export default class Api {
   }
 
   _makeRequest(url, method, body) {
-    console.log(url, method, body);
     return fetch(url, {
       method,
       headers: {
@@ -59,9 +58,20 @@ export default class Api {
     );
   }
   removeCard(cardId) {
-    console.log(cardId);
     return this._makeRequest(
       `${this.baseUrl}/${this.group_id}/cards/${cardId}`,
+      'DELETE'
+    );
+  }
+  addCardLike(cardId) {
+    return this._makeRequest(
+      `${this.baseUrl}/${this.group_id}/cards/likes/${cardId}`,
+      'PUT'
+    );
+  }
+  removeCardLike(cardId) {
+    return this._makeRequest(
+      `${this.baseUrl}/${this.group_id}/cards/likes/${cardId}`,
       'DELETE'
     );
   }

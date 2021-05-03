@@ -11,9 +11,6 @@ import FormValidator from '../components/FormValidator.js';
 
 const editButton = document.querySelector(selectorNames.editButtonSelector);
 const addButton = document.querySelector(selectorNames.addButtonSelector);
-const deleteButton = document.querySelector(
-  selectorNames.buttonConfirmSelector
-);
 const editAvatarButton = document.querySelector(
   selectorNames.editAvatarSelector
 );
@@ -101,31 +98,45 @@ function handleCardClick(name, link) {
   popupImage.open(name, link);
 }
 
-function handleCardDelete(e, cardId) {
-  e.preventDefault();
-
+function handleCardDelete(cardElement, cardId) {
   deleteConfirmPopup.setLoading(true);
   api
     .removeCard(cardId)
-    .then(data => {
-      section.removeItem(cardId);
+    .then(() => {
+      section.removeItem(cardElement);
       deleteConfirmPopup.setLoading(false);
       deleteConfirmPopup.close();
     })
     .catch(error => console.log(error));
 }
 
-function handleDeleteConfirm(cardId) {
-  deleteConfirmPopup.setId(cardId);
+function handleDeleteConfirm(evt, cardId) {
+  deleteConfirmPopup.setData(evt.target.closest('.card'), cardId);
   deleteConfirmPopup.open();
+}
+
+function handleLikeButton(isLiked, cardId, updateLikeCount) {
+  if (isLiked) {
+    api
+      .addCardLike(cardId)
+      .then(updatedCard => updateLikeCount(updatedCard.likes.length))
+      .catch(error => console.log(error));
+  } else {
+    api
+      .removeCardLike(cardId)
+      .then(updatedCard => updateLikeCount(updatedCard.likes.length))
+      .catch(error => console.log(error));
+  }
 }
 
 function createCardElement(item) {
   const card = new Card(
     item,
+    userInfo._id,
     selectorNames.cardTemplateSelector,
     handleCardClick,
-    handleDeleteConfirm
+    handleDeleteConfirm,
+    handleLikeButton
   );
   return card.generateCard(userInfo._id, item.owner._id);
 }
@@ -162,13 +173,11 @@ function handleAddFormSubmit(evt, values, closePopup) {
   addPopupForm.setLoading(true);
   api
     .postNewCard({ name: values.title, link: values.link })
-    .then(card => {
+    .then(cardData => {
       addPopupForm.setLoading(false);
       closePopup();
       if (section) {
-        const card = createCardElement(card);
-        section.addItem(card);
-        section.prependItem(card);
+        section.prependItem(createCardElement(cardData));
       }
     })
     .catch(err => console.log(err));
