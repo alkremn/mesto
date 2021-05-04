@@ -5,7 +5,7 @@
 
 Github Pages
 
-- [Ссылка на страницу проекта](https://alkremn.github.io/mesto/index.html)
+- [Ссылка на страницу проекта](https://alkremn.github.io/mesto)
 
 Figma
 
