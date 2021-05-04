@@ -1,6 +1,6 @@
 import './index.css';
 import { selectorNames, options } from '../utils/constants.js';
-import Api from '../utils/api.js';
+import Api from '../components/Api.js';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import PopupWithImage from '../components/PopupWithImage.js';
@@ -19,16 +19,9 @@ const aboutInput = document.querySelector('#about-input');
 
 const api = new Api(options);
 
-api
-  .getUserInfo()
-  .then(userData => {
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cards]) => {
     userInfo.setUserInfo(userData);
-  })
-  .catch(error => console.log(error));
-
-api
-  .getInitialCards()
-  .then(cards => {
     section.addItems(cards);
     section.renderElements();
   })
@@ -98,33 +91,37 @@ function handleCardClick(name, link) {
   popupImage.open(name, link);
 }
 
-function handleCardDelete(cardElement, cardId) {
+function handleCardDelete(card) {
   deleteConfirmPopup.setLoading(true);
   api
-    .removeCard(cardId)
+    .removeCard(card._id)
     .then(() => {
-      section.removeItem(cardElement);
+      card.removeCard();
       deleteConfirmPopup.setLoading(false);
       deleteConfirmPopup.close();
     })
     .catch(error => console.log(error));
 }
 
-function handleDeleteConfirm(evt, cardId) {
-  deleteConfirmPopup.setData(evt.target.closest('.card'), cardId);
+function handleDeleteConfirm(card) {
+  deleteConfirmPopup.setData(card);
   deleteConfirmPopup.open();
 }
 
-function handleLikeButton(isLiked, cardId, updateLikeCount) {
-  if (isLiked) {
+function handleLikeButton(card) {
+  if (card.getIsLiked()) {
     api
-      .addCardLike(cardId)
-      .then(updatedCard => updateLikeCount(updatedCard.likes.length))
+      .removeCardLike(card.getCardId())
+      .then(updatedCard =>
+        card.updateLikeStatus(false, updatedCard.likes.length)
+      )
       .catch(error => console.log(error));
   } else {
     api
-      .removeCardLike(cardId)
-      .then(updatedCard => updateLikeCount(updatedCard.likes.length))
+      .addCardLike(card.getCardId())
+      .then(updatedCard =>
+        card.updateLikeStatus(true, updatedCard.likes.length)
+      )
       .catch(error => console.log(error));
   }
 }
@@ -132,13 +129,13 @@ function handleLikeButton(isLiked, cardId, updateLikeCount) {
 function createCardElement(item) {
   const card = new Card(
     item,
-    userInfo._id,
+    userInfo.getUserInfo().id,
     selectorNames.cardTemplateSelector,
     handleCardClick,
     handleDeleteConfirm,
     handleLikeButton
   );
-  return card.generateCard(userInfo._id, item.owner._id);
+  return card.generateCard();
 }
 
 // Submit functions

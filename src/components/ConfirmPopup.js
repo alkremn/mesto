@@ -11,22 +11,16 @@ export default class ConfirmPopup extends Popup {
   }
 
   _handleConfirmClick() {
-    this._handleDelete(this._card, this._id);
+    this._handleDelete(this._card);
   }
 
-  open() {
+  setEventListeners() {
+    super.setEventListeners();
     this._confirmButton.addEventListener('click', this._handleConfirmClick);
-    super.open();
   }
 
-  close() {
-    this._confirmButton.removeEventListener('click', this._handleConfirmClick);
-    super.close();
-  }
-
-  setData(card, id) {
+  setData(card) {
     this._card = card;
-    this._id = id;
   }
 
   setLoading(isLoading) {
